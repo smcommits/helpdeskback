@@ -1,31 +1,12 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  User.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    }, 
-    facebookID: {
-      type: DataTypes.STRING, 
-      allowNull: false, 
-    }
-    
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema({
+  facebookID: {type: String, required: true}, 
+  name: {type: String, required: true}, 
+  messages: {type: Schema.ObjectId, ref: 'Message'}, 
+  conversations: {type: Schema.ObjectId, ref: 'Conversation'}
+})
+
+module.exports = mongoose.model('User', UserSchema)

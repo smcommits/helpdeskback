@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "startdev": "nodemon node ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +17,6 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "pg": "^8.7.1",
-    "sequelize": "^6.7.0"
+    "mongoose": "^6.0.11"
   }
 }
