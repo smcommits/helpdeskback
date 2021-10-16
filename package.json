@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "if [$NODE_ENV == 'production']; then node ./index.js; else nodemon ./src/index.js;",
     "prebuild": "rm -rf ./build"
   },
   "keywords": [],
