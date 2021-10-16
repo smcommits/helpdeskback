@@ -1,15 +1,19 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import routes from '../routes'
+import routes from './routes'
 
+const { sequelize: db } = require('./models')
 
 const app = express();
-app.user(cors())
+app.use(express.json())
+app.use(cors())
 
-app.use('/user', routes.user)
- 
-app.listen(process.env.PORT, () =>
-  console.log('Example app listening on port 3000!'),
-);
- 
+
+app.use('/authentication', routes.authentication)
+
+db.sync().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Example app listening on port ${process.env.PORT}!`)
+  });
+});
