@@ -5,7 +5,7 @@ const routes = require('./routes')
 
 
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb+srv://falkan:WeDhR1a4IPyZ8nYL@cluster0.mx77g.mongodb.net/helpdesk?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
