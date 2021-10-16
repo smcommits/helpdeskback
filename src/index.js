@@ -11,6 +11,7 @@ app.use(cors())
 
 
 app.use('/authentication', routes.authentication)
+app.use('/webhook', routes.webhook)
 
 db.sync().then(() => {
   app.listen(process.env.PORT, () => {
