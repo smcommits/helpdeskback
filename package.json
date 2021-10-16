@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "if [$NODE_ENV == 'production']; then node ./index.js; else nodemon ./src/index.js;",
-    "prebuild": "rm -rf ./build"
+    "start": "nodemon --exec babel-node index.js", 
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,9 @@
     "nodemon": "^2.0.13"
   },
   "dependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8", 
     "nodemon": "^2.0.13",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
