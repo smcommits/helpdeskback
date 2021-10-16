@@ -12,12 +12,5 @@
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
-  },
-  "production": {
-    "username": "vzkhbfxkfhzzif",
-    "password": "20ae8ddc864f2f459fcf0256830e1311d5c61a6b38ad74b575600c14df78d188",
-    "database": "de74r37t49fchg",
-    "host": "postgres://vzkhbfxkfhzzif:20ae8ddc864f2f459fcf0256830e1311d5c61a6b38ad74b575600c14df78d188@ec2-3-226-134-153.compute-1.amazonaws.com:5432/de74r37t49fchg",
-    "dialect": "postgres"
   }
 }
