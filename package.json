@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startdev": "nodemon --exec babel-node src/index.js",
+    "build": "babel -d ./build ./src -s",
+    "start": "npm run build && node ./build/index.js", 
+    "prebuild": "rm -rf ./build"
   },
   "keywords": [],
   "author": "",
