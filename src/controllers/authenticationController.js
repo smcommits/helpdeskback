@@ -1,6 +1,6 @@
 const { User } = require('../models')
 
-exports.authenticate = async(req, res) => {
+exports.authenticate = async function(req, res) {
     const {name, facebookID} = req.body 
     let user = await User.findOne({
       where: { facebookID }

@@ -1,7 +1,7 @@
-import authentication from './authentication'
-import webhook from './webhook'
+const authentication = require('./authentication')
+const webhook = require('./webhook')
 
-export default {
+module.exports = {
   authentication, 
   webhook, 
 }

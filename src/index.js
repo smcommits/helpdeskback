@@ -1,7 +1,8 @@
-import 'dotenv/config';
-import cors from 'cors';
-import express from 'express';
-import routes from './routes'
+require('dotenv').config();
+const cors = require('cors');
+const express = require('express')
+const routes = require('./routes')
+
 
 const { sequelize: db } = require('./models')
 
@@ -13,8 +14,8 @@ app.use(cors())
 app.use('/authentication', routes.authentication)
 app.use('/webhook', routes.webhook)
 
-db.sync().then(() => {
-  app.listen(process.env.PORT, () => {
+db.sync().then(function () {
+  app.listen(process.env.PORT, function() {
     console.log(`Example app listening on port ${process.env.PORT}!`)
   });
 });
