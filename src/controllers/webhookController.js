@@ -20,6 +20,13 @@ exports.deliver = function(req, res){
     body.entry.forEach(function(entry) {
       let webhook_event = entry.messaging[0]
       return console.log(webhook_event)
+
+      let sender_psid = webhook_event.sender.id;
+      console.log("Sender PSID:" + sender_psid)
+
+      if(webhook_event.message) {
+        handleMessage(sender_psid, webhook.event.message, req.socket)
+      }
     });
 
   return res.status(200).send('EVENT_RECIEVED');
@@ -29,9 +36,12 @@ exports.deliver = function(req, res){
 
 }
 
-// Handles messages events
-function handleMessage(sender_psid, received_message) {
 
+// Handles messages events
+function handleMessage(sender_psid, received_message, socket) {
+  if(received_message.text) {
+      socket.emit("FromAPI", {message, sender_psid})
+  }
 }
 
 // Handles messaging_postbacks events
