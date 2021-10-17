@@ -20,10 +20,9 @@ exports.deliver = function(req, res){
     body.entry.forEach(function(entry) {
       let webhook_event = entry.messaging[0]
       let sender_psid = webhook_event.sender;
-      console.log("Sender PSID:" + sender_psid)
       if(webhook_event.message) {
         console.log(webhook_event.message)
-        handleMessage(webhook_event.message, req.io)
+        handleMessage(webhook_event.message, req.io, sender_psid)
       }
     });
 
@@ -36,12 +35,12 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-function handleMessage(received_message, io) {
+function handleMessage(received_message, io, sender_psid) {
   if(received_message.text) {
     console.log('here')
     message = received_message.text
     
-    io.in('messagengerRoom').emit('message', {received_message})
+    io.in('messagengerRoom').emit('message', {received_message, sender_psid})
   }
 }
 
