@@ -34,9 +34,6 @@ const broadcast = function(message) {
   })
 }
 
-
-app.use(attachSocket);
-
 const mongoose = require('mongoose');
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
