@@ -16,15 +16,16 @@ exports.verify = function(req, res) {
 
 exports.deliver = function(req, res){
   let body = req.body
-  if(body.object === 'page'){
-    body.entry.forEach(function(entry) {
-      let webhook_event = entry.messaging[0]
-      let sender_psid = webhook_event.sender;
-      if(webhook_event.message) {
-        console.log(webhook_event.message)
-        handleMessage(webhook_event.message, req.io, sender_psid)
-      }
-    });
+  console.log(body)
+  // if(body.object === 'page'){
+    // body.entry.forEach(function(entry) {
+      // let webhook_event = entry.messaging[0]
+      // let sender_psid = webhook_event.sender;
+      // if(webhook_event.message) {
+        // console.log(webhook_event.message)
+        // handleMessage(webhook_event.message, req.io, sender_psid)
+      // }
+    // });
 
   return res.status(200).send('EVENT_RECIEVED');
   } else {
