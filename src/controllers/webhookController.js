@@ -22,7 +22,7 @@ exports.deliver = function(req, res){
       let sender_psid = webhook_event.sender;
       console.log("Sender PSID:" + sender_psid)
       if(webhook_event.message) {
-        console.log(message)
+        console.log(webhook_event.message)
         handleMessage(webhook_event.message, req.io)
       }
     });
