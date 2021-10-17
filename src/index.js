@@ -46,4 +46,10 @@ server.listen(process.env.PORT, function() {
   console.log(`Listening on port ${process.env.PORT}!`)
 });
 
+
+const a = function() {
+  console.log('fucntion A')
+}
+
 exports.broadcast = broadcast;
+exports.a = a

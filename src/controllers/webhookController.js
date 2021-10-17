@@ -1,4 +1,4 @@
-const {  broadcast } = require('../index');
+const {  broadcast, a } = require('../index');
 
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -41,6 +41,7 @@ exports.deliver = function(req, res){
 function handleMessage(sender_psid, received_message, io) {
   if(received_message.text) {
     message = received_message.text
+    a()
     broadcast({message: message})
   }
 }
