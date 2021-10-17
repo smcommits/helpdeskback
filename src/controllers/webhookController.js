@@ -16,6 +16,7 @@ exports.verify = function(req, res) {
 
 exports.deliver = function(req, res){
   let body = req.body
+  req.io.in('messagengerRoom').emit('message', {body});
   console.log(body)
   // if(body.object === 'page'){
     // body.entry.forEach(function(entry) {
