@@ -1,3 +1,5 @@
+const broadcast = require('../index');
+
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
@@ -39,8 +41,7 @@ exports.deliver = function(req, res){
 function handleMessage(sender_psid, received_message, io) {
   if(received_message.text) {
     message = received_message.text
-    console.log("hoola")
-    io.socket.to("room").emit(JSON.stringify({message, sender_psid}));
+    broadcast({message: message})
   }
 }
 
