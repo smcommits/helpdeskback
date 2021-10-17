@@ -3,7 +3,6 @@ const cors = require('cors');
 const express = require('express')
 const http = require('http');
 const routes = require('./routes')
-const socketIO = require("socket.io");
 const ws = require('ws');
 
 

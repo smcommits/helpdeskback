@@ -1,4 +1,4 @@
-const broadcast = require('../index');
+const {  broadcast } = require('../index');
 
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
