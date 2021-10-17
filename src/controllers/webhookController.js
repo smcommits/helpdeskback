@@ -1,5 +1,3 @@
-const {  broadcast, a } = require('../index');
-
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
@@ -21,11 +19,11 @@ exports.deliver = function(req, res){
   if(body.object === 'page'){
     body.entry.forEach(function(entry) {
       let webhook_event = entry.messaging[0]
-      let sender_psid = webhook_event.sender.id;
+      let sender_psid = webhook_event.sender;
       console.log("Sender PSID:" + sender_psid)
-
       if(webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message, req.io)
+        console.log(message)
+        handleMessage(webhook_event.message, req.io)
       }
     });
 
@@ -38,11 +36,12 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-function handleMessage(sender_psid, received_message, io) {
+function handleMessage(received_message, io) {
   if(received_message.text) {
+    console.log('here')
     message = received_message.text
-    a()
-    broadcast({message: message})
+    
+    io.in('messagengerRoom').emit('message', {received_message})
   }
 }
 
@@ -54,4 +53,8 @@ function handlePostback(sender_psid, received_postback) {
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
   
+}
+
+const broadcastMessage = function(io) {
+
 }

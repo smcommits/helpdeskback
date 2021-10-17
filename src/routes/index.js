@@ -5,3 +5,7 @@ module.exports = {
   authentication, 
   webhook, 
 }
+
+let broadcast;
+
+exports.broadcast = broadcast;
