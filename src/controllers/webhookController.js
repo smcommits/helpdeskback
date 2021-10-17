@@ -28,9 +28,9 @@ exports.deliver = function(req, res){
     // });
 
   return res.status(200).send('EVENT_RECIEVED');
-  } else {
-    return res.sendStatus(404)
-  }
+ // } else {
+  //  return res.sendStatus(404)
+  //}
 
 }
 
