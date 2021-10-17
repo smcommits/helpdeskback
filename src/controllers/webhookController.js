@@ -19,10 +19,9 @@ exports.deliver = function(req, res){
   if(body.object === 'page'){
     body.entry.forEach(function(entry) {
       let webhook_event = entry.messaging[0]
-      return console.log(webhook_event)
-
       let sender_psid = webhook_event.sender.id;
       console.log("Sender PSID:" + sender_psid)
+      console.log(req.socket)
 
       if(webhook_event.message) {
         handleMessage(sender_psid, webhook.event.message, req.socket)
@@ -40,7 +39,8 @@ exports.deliver = function(req, res){
 // Handles messages events
 function handleMessage(sender_psid, received_message, socket) {
   if(received_message.text) {
-      socket.emit("FromAPI", {message, sender_psid})
+    console.log(socket)
+    socket.to("some room").emit(JSON.stringify({message, sender_psid}));
   }
 }
 
