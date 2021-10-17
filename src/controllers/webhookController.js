@@ -23,7 +23,7 @@ exports.deliver = function(req, res){
       console.log("Sender PSID:" + sender_psid)
 
       if(webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message, req.socket)
+        handleMessage(sender_psid, webhook_event.message, req.io)
       }
     });
 
@@ -36,11 +36,11 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-function handleMessage(sender_psid, received_message, socket) {
+function handleMessage(sender_psid, received_message, io) {
   if(received_message.text) {
     message = received_message.text
     console.log("hoola")
-    socket.to("some room").emit(JSON.stringify({message, sender_psid}));
+    io.socket.to("room").emit(JSON.stringify({message, sender_psid}));
   }
 }
 

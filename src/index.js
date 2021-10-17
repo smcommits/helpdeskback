@@ -19,7 +19,8 @@ const io = socketIO(server, {
 })
 
 function attachSocket(req, res, next) {
-  req.socket = io
+  req.io = io
+  console.log(req)
   next()
 }
 
@@ -31,27 +32,9 @@ mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
-let interval;
-
 io.on("connection", (socket) => {
-  console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
-  });
+  socket.join("room");
 });
-
-const getApiAndEmit = socket => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-};
-
 
 
 app.use('/authentication', routes.authentication)
