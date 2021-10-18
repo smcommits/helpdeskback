@@ -71,6 +71,7 @@ function getUser(pageID) {
     populate('user').
     exec(function(err, user) {
       if(err) return err
+      console.log(user)
       return user.user
     })
 }
