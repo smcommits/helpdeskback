@@ -68,13 +68,15 @@ async function createConversation(senderPSID, pageID, recieverID) {
 
 
 function getUser(pageID) {
-  Page.findOne({pageID: pageID}).
+  const user = Page.findOne({pageID: pageID}).
     populate('user').
     exec(function(err, user) {
       if(err) return err
       console.log(user.user.id)
       return user.user
     })
+
+  return user
 }
 
 async function getConversation(pageID) {
