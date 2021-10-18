@@ -45,6 +45,7 @@ exports.deliver = function(req, res){
 function handleMessage(receivedMessage, io, senderPSID, pageID) {
   if(receivedMessage.text) {
     const user = getUser(pageID)
+    console.log(user)
     const conversation = createConversation(senderPSID, pageID, user.id)
     const message = createMessage(receivedMessage.text, conversation.id)
     console.log(user.name)  
@@ -71,7 +72,7 @@ function getUser(pageID) {
     populate('user').
     exec(function(err, user) {
       if(err) return err
-      console.log(user)
+      console.log(user.user.id)
       return user.user
     })
 }

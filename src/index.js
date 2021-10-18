@@ -6,6 +6,17 @@ const routes = require('./routes')
 const socket = require('socket.io')
 const Page = require('./models/page')
 
+function getUser(pageID) {
+  Page.findOne({pageID: pageID}).
+    populate('user').
+    exec(function(err, user) {
+      if(err) return err
+      console.log(user.user.id)
+      return user.user
+    })
+}
+
+getUser("103848018753695")
 
 const app = express();
 const server = http.createServer(app)
