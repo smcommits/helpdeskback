@@ -1,6 +1,7 @@
 const Conversation = require('../models/conversation');
 const Message = require('../models/message');
 const User = require('../models/user');
+const Page = require('../models/page')
 
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
