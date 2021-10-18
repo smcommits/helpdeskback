@@ -43,10 +43,9 @@ async function handleMessage(receivedMessage, io, senderPSID, pageID, time) {
   if(receivedMessage.text) {
     const user = await getUser(pageID)
     const conversation = await createConversation(pageID, user.id)
-    console.log(time)
-    const message = await createMessage(receivedMessage.text, senderPSID, user.facebookID, conversation.id)
+    const message = await createMessage(receivedMessage.text, senderPSID, user.facebookID, conversation.id, time)
     console.log(`message${user.facebookID}`)  
-    io.in(`message${user.facebookID}`).emit('message', {time, message, senderPSID})
+    io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
 }
 
@@ -75,8 +74,8 @@ async function getConversation(pageID) {
   return conversation
 }
 
-async function createMessage(text, senderID, recieverID, conversationID) {
- const message = await Message.create({text, senderID, recieverID,  conversation: conversationID})
+async function createMessage(text, senderID, recieverID, conversationID, time) {
+  const message = await Message.create({text, senderID, recieverID,  conversation: conversationID, time: time})
   return message
 }
 
