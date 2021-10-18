@@ -4,7 +4,7 @@ const express = require('express')
 const http = require('http');
 const routes = require('./routes')
 const socket = require('socket.io')
-
+const Conversation = require('../models/conversation');
 
 const app = express();
 const server = http.createServer(app)
