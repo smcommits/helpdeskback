@@ -29,7 +29,7 @@ exports.deliver = function(req, res){
       let webhookEvent = entry.messaging[0]
       let senderPSID = webhookEvent.sender;
       if(webhookEvent.message) {
-        handleMessage(webhookEvent.message, req.io, senderPSID, pageID)
+        handleMessage(webhookEvent.message, req.io, senderPSID.id, pageID)
       }
   });
 
@@ -48,7 +48,6 @@ async function handleMessage(receivedMessage, io, senderPSID, pageID) {
     console.log(user)
     const conversation = await createConversation(senderPSID, pageID, user.id)
     const message = await createMessage(receivedMessage.text, conversation.id)
-    conversation.messages.push(message)
     console.log(user.name)  
     io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
