@@ -72,7 +72,7 @@ async function getUser(pageID) {
 }
 
 async function getConversation(pageID) {
-  const conversation = await Conversation.exists({pageID})
+  let conversation = await Conversation.exists({pageID})
   if(!conversation) return null;
   let conversation = await Conversation.findOne({pageID: pageID})
   return conversation
