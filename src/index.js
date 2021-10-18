@@ -4,6 +4,7 @@ const express = require('express')
 const http = require('http');
 const routes = require('./routes')
 const socket = require('socket.io')
+const Page = require('./models/page')
 
 
 const app = express();
