@@ -45,10 +45,10 @@ exports.deliver = function(req, res){
 async function handleMessage(receivedMessage, io, senderPSID, pageID) {
   if(receivedMessage.text) {
     const user = await getUser(pageID)
-    console.log(user)
     const conversation = await createConversation(senderPSID, pageID, user.id)
+    console.log(conversation.id)
     const message = await createMessage(receivedMessage.text, conversation.id)
-    console.log(user.name)  
+    console.log(`message${user.facebookID}`)  
     io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
 }
