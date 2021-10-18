@@ -6,6 +6,7 @@ exports.authenticate = async function(req, res) {
 
     if(!user) {
         let user = new User({name, facebookID});
+      console.log('here')
       user.save(function(err) {
         if(err) return res.json(err)
         return res.json(user)
