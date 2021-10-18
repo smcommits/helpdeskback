@@ -42,12 +42,13 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-function handleMessage(receivedMessage, io, senderPSID, pageID) {
+async function handleMessage(receivedMessage, io, senderPSID, pageID) {
   if(receivedMessage.text) {
-    const user = getUser(pageID)
+    const user = await getUser(pageID)
     console.log(user)
-    const conversation = createConversation(senderPSID, pageID, user.id)
-    const message = createMessage(receivedMessage.text, conversation.id)
+    const conversation = await createConversation(senderPSID, pageID, user.id)
+    const message = await createMessage(receivedMessage.text, conversation.id)
+    conversation.messages.push(message)
     console.log(user.name)  
     io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
@@ -55,26 +56,18 @@ function handleMessage(receivedMessage, io, senderPSID, pageID) {
 
 
 async function createConversation(senderPSID, pageID, recieverID) {
-  const conversation = getConversation(pageID)
+  const conversation = await getConversation(pageID)
   if(!conversation) {
-    Conversation.create({senderID: senderPSID, pageID:pageID, reciever: recieverID}, function(err, conversation) {
-      if(err) return err;
-      return conversation
-    })
+  const conversation =  await Conversation.create({senderID: senderPSID, pageID:pageID, reciever: recieverID})
+  return conversation
   }
-
   return conversation
 }
 
 
-function getUser(pageID) {
-  const user = Page.findOne({pageID: pageID}).
-    populate('user').
-    exec(function(err, user) {
-      if(err) return err
-      console.log(user.user.id)
-      return user.user
-    })
+async function getUser(pageID) {
+  const page = await Page.findOne({pageID: pageID}).populate('user');
+  const user = page.user;
 
   return user
 }
@@ -85,11 +78,9 @@ async function getConversation(pageID) {
   return conversation
 }
 
-function createMessage(text, conversationID) {
-  Message.create({text, conversation: conversationID},  function(err, message) {
-    if(err) return err
-    return message
-  })
+async function createMessage(text, conversationID) {
+ const message = await Message.create({text, conversation: conversationID})
+  return message
 }
 
 
