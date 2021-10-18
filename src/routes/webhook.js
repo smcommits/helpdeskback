@@ -10,6 +10,7 @@ exports.broadcast = broadcast;
 const router = Router()
 
 router.get('/', webhookController.verify)
-router.post('/', webhookController.deliver)
+router.post('/', webhookController.recieve)
+router.post('/send', webhookController.send)
 
 module.exports =  router;

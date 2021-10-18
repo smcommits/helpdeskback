@@ -2,6 +2,7 @@ const Conversation = require('../models/conversation');
 const Message = require('../models/message');
 const User = require('../models/user');
 const Page = require('../models/page')
+const request = require('request')
 
 exports.verify = function(req, res) {
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -17,7 +18,7 @@ exports.verify = function(req, res) {
     }
 }
 
-exports.deliver = function(req, res){
+exports.recieve = function(req, res){
   let body = req.body
   if(body.object === 'page'){
     body.entry.forEach(function(entry) {
@@ -37,6 +38,32 @@ exports.deliver = function(req, res){
 
 }
 
+exports.send = function(req, res) {
+  let { senderPSID, text, pageAccessToken } = req.body
+  console.log(senderPSID, text, pageAccessToken)
+
+  let request_body = {
+    "recipient": {
+      "id": senderPSID
+    },
+    "message": {
+      "text": text
+    }
+  }
+
+  request({
+    "uri": "https://graph.facebook.com/v12/me/messages", 
+    "qs": { "access_token": pageAccessToken }, 
+    "method": "POST", 
+    "json": request_body
+  }, function(err, res, body) {
+    if(!err) {
+      console.log('message sent!')
+    } else{
+      console.error("Unable to send message:" + err);
+    }
+  })
+}
 
 // Handles messages events
 async function handleMessage(receivedMessage, io, senderPSID, pageID, time) {
