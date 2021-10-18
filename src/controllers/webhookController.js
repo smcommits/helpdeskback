@@ -26,8 +26,8 @@ exports.deliver = function(req, res){
     body.entry.forEach(function(entry) {
       let pageID = entry.id
       let webhookEvent = entry.messaging[0]
-      let senderPSID = webhook_event.sender;
-      if(webhook_event.message) {
+      let senderPSID = webhookEvent.sender;
+      if(webhookEvent.message) {
         handleMessage(webhookEvent.message, req.io, senderPSID, pageID)
       }
   });
@@ -41,7 +41,7 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-function handleMessage(received_message, io, senderPSID, pageID) {
+function handleMessage(receivedMessage, io, senderPSID, pageID) {
   if(receivedMessage.text) {
     const user = getUser(pageID)
     const conversation = createConversation(senderPSID, pageID, user.id)
