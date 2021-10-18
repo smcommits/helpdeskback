@@ -20,14 +20,14 @@ exports.verify = function(req, res) {
 exports.deliver = function(req, res){
   let body = req.body
   console.log(body)
-  io.in(`message${user.facebookID}`).emit('message', {body})
   if(body.object === 'page'){
     body.entry.forEach(function(entry) {
       let pageID = entry.id
       let webhookEvent = entry.messaging[0]
+      let time = entry.time
       let senderPSID = webhookEvent.sender;
       if(webhookEvent.message) {
-        handleMessage(webhookEvent.message, req.io, senderPSID.id, pageID)
+        handleMessage(webhookEvent.message, req.io, senderPSID.id, pageID, time)
       }
   });
 
@@ -40,14 +40,14 @@ exports.deliver = function(req, res){
 
 
 // Handles messages events
-async function handleMessage(receivedMessage, io, senderPSID, pageID) {
+async function handleMessage(receivedMessage, io, senderPSID, pageID, time) {
   if(receivedMessage.text) {
     const user = await getUser(pageID)
     const conversation = await createConversation(pageID, user.id)
     console.log(conversation.id)
     const message = await createMessage(receivedMessage.text, senderPSID, user.facebookID, conversation.id)
     console.log(`message${user.facebookID}`)  
-    io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
+    io.in(`message${user.facebookID}`).emit('message', {time, message, senderPSID})
   }
 }
 
