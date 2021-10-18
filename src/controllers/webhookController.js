@@ -14,15 +14,13 @@ exports.verify = function(req, res) {
         console.log('webhook verified')
         return res.status(200).send(challenge)
       }
-    } else {
-      return res.status(403)
     }
 }
 
 exports.deliver = function(req, res){
   let body = req.body
-  req.io.in('messagengerRoom').emit('message', {body});
   console.log(body)
+  io.in(`message${user.facebookID}`).emit('message', {body})
   if(body.object === 'page'){
     body.entry.forEach(function(entry) {
       let pageID = entry.id
