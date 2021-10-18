@@ -45,19 +45,19 @@ exports.deliver = function(req, res){
 async function handleMessage(receivedMessage, io, senderPSID, pageID) {
   if(receivedMessage.text) {
     const user = await getUser(pageID)
-    const conversation = await createConversation(senderPSID, pageID, user.id)
+    const conversation = await createConversation(pageID, user.id)
     console.log(conversation.id)
-    const message = await createMessage(receivedMessage.text, conversation.id)
+    const message = await createMessage(receivedMessage.text, senderPSID, userID, conversation.id)
     console.log(`message${user.facebookID}`)  
     io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
 }
 
 
-async function createConversation(senderPSID, pageID, recieverID) {
+async function createConversation(pageID, userID) {
   const conversation = await getConversation(pageID)
   if(!conversation) {
-  const conversation =  await Conversation.create({senderID: senderPSID, pageID:pageID, reciever: recieverID})
+  const conversation =  await Conversation.create({pageID:pageID, userID: userID})
   return conversation
   }
   return conversation
@@ -78,8 +78,8 @@ async function getConversation(pageID) {
   return conversation
 }
 
-async function createMessage(text, conversationID) {
- const message = await Message.create({text, conversation: conversationID})
+async function createMessage(text, senderID, recieverID, conversationID) {
+ const message = await Message.create({text, senderID, recieverID,  conversation: conversationID})
   return message
 }
 
