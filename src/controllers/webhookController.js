@@ -47,7 +47,7 @@ async function handleMessage(receivedMessage, io, senderPSID, pageID) {
     const user = await getUser(pageID)
     const conversation = await createConversation(pageID, user.id)
     console.log(conversation.id)
-    const message = await createMessage(receivedMessage.text, senderPSID, userID, conversation.id)
+    const message = await createMessage(receivedMessage.text, senderPSID, user.facebookID, conversation.id)
     console.log(`message${user.facebookID}`)  
     io.in(`message${user.facebookID}`).emit('message', {message, senderPSID})
   }
