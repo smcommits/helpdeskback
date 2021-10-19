@@ -5,6 +5,7 @@ exports.new = async function (req, res) {
   const { pageID, facebookID } = req.body;
   console.log(pageID, facebookID);
   const page = await Page.exists({ pageID });
+  console.log(page)
   if (!page) {
     User.findOne({ facebookID }, (err, user) => {
       if (err) return res.json(err);
