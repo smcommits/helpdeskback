@@ -21,7 +21,7 @@ exports.verify = function (req, res) {
 exports.recieve = function (req, res) {
   const { body } = req;
   if (body.entry[0].changes) {
-    handleComment(body);
+    handleComment(body, req.io);
   } else {
     if (body.object === 'page') {
       body.entry.forEach((entry) => {
@@ -86,7 +86,7 @@ async function handleMessage(receivedMessage, io, senderPSID, pageID, time) {
   }
 }
 
-async function handleComment(body) {
+async function handleComment(body, io) {
   const pageID = body.entry[0].id;
   const { time } = body.entry[0];
   const commentObject = body.entry[0].changes[0].value;
