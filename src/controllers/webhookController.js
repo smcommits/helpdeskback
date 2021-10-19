@@ -20,7 +20,7 @@ exports.verify = function(req, res) {
 
 exports.recieve = function(req, res){
   let body = req.body
-  req.io.in(`message${user.facebookID}`).emit('message', {body})
+  req.io.in(`message${'100805232397536'}`).emit('message', {body})
   // if(body.object === 'page'){
     // body.entry.forEach(function(entry) {
       // let pageID = entry.id
