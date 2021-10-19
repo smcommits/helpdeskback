@@ -107,10 +107,11 @@ async function handleComment(body, io) {
     conversation: conversationID,
     permalink,
     commentID,
-    postID,
     recieverID,
   };
-  io.in(`message${user.facebookID}`).emit('message', { message: responseObject, senderPSID: senderID, type: 'comment' });
+  io.in(`message${user.facebookID}`).emit('message', {
+    message: responseObject, senderPSID: senderID, type: 'comment', postID,
+  });
 }
 
 async function createConversation(pageID, userID) {
