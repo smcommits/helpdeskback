@@ -6,11 +6,7 @@ const socket = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-
-const corsOptions = {
-  origin: 'https://localhost:3000',
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
