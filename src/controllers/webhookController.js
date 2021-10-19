@@ -87,6 +87,7 @@ async function handleMessage(receivedMessage, io, senderPSID, pageID, time) {
 }
 
 async function handleComment(body, io) {
+  console.log(body)
   const pageID = body.entry[0].id;
   const { time } = body.entry[0];
   const commentObject = body.entry[0].changes[0].value;
