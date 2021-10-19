@@ -6,16 +6,13 @@ exports.new = async function (req, res) {
   console.log(pageID, facebookID);
   const page = await Page.exists({ pageID });
   console.log(page)
+
   if (!page) {
-    User.findOne({ facebookID }, (err, user) => {
-      if (err) return res.json(err);
-      if (user) {
-        Page.create({ pageID, user: user.id }, (err, page) => {
-          if (err) return res.json(err);
-          return res.json(page);
-        });
-      }
-    });
+    const user = await User.findOne({facebookID})
+    if (user) {
+      const page = await Page.create({ pageID, user: user.id })
+      return res.json(page)
+    }
   }
-  return res.status(200);
-};
+  return res.json({success: 'true'});
+}
