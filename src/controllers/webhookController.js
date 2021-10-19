@@ -20,23 +20,24 @@ exports.verify = function(req, res) {
 
 exports.recieve = function(req, res){
   let body = req.body
-  if(body.object === 'page'){
-    body.entry.forEach(function(entry) {
-      let pageID = entry.id
-      let webhookEvent = entry.messaging[0]
-      let time = entry.time
-      let senderPSID = webhookEvent.sender;
-      if(webhookEvent.message) {
-        handleMessage(webhookEvent.message, req.io, senderPSID.id, pageID, time)
-      }
-  });
+  req.io.in(`message${user.facebookID}`).emit('message', {body})
+  // if(body.object === 'page'){
+    // body.entry.forEach(function(entry) {
+      // let pageID = entry.id
+      // let webhookEvent = entry.messaging[0]
+      // let time = entry.time
+      // let senderPSID = webhookEvent.sender;
+      // if(webhookEvent.message) {
+        // handleMessage(webhookEvent.message, req.io, senderPSID.id, pageID, time)
+      // }
+  // });
 
   return res.status(200).send('EVENT_RECIEVED');
- } else {
-   return res.sendStatus(404)
-  }
+ } // else {
+   // return res.sendStatus(404)
+  // }
 
-}
+// }
 
 exports.send = function(req, res) {
   let { senderPSID, text, pageAccessToken } = req.body
@@ -52,17 +53,20 @@ exports.send = function(req, res) {
   }
 
   request({
-    "uri": "https://graph.facebook.com/v12/me/messages", 
+    "uri": "https://graph.facebook.com/me/messages", 
     "qs": { "access_token": pageAccessToken }, 
     "method": "POST", 
     "json": request_body
   }, function(err, res, body) {
     if(!err) {
-      console.log('message sent!')
+      console.log(body)
+      return res
     } else{
       console.error("Unable to send message:" + err);
+      return err
     }
   })
+  return res.status(200)
 }
 
 // Handles messages events
