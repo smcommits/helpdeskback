@@ -1,16 +1,15 @@
-const { Router } = require('express')
+const { Router } = require('express');
 
-const webhookController = require('../controllers/webhookController')
+const webhookController = require('../controllers/webhookController');
 
-
-let broadcast
+let broadcast;
 
 exports.broadcast = broadcast;
 
-const router = Router()
+const router = Router();
 
-router.get('/', webhookController.verify)
-router.post('/', webhookController.recieve)
-router.post('/send', webhookController.send)
+router.get('/', webhookController.verify);
+router.post('/', webhookController.recieve);
+router.post('/send', webhookController.send);
 
-module.exports =  router;
+module.exports = router;
