@@ -5,14 +5,14 @@ exports.new = async function (req, res) {
   const { pageID, facebookID } = req.body;
   console.log(pageID, facebookID);
   const page = await Page.exists({ pageID });
-  console.log(page)
+  console.log(page);
 
   if (!page) {
-    const user = await User.findOne({facebookID})
+    const user = await User.findOne({ facebookID });
     if (user) {
-      const page = await Page.create({ pageID, user: user.id })
-      return res.json(page)
+      const page = await Page.create({ pageID, user: user.id });
+      return res.json(page);
     }
   }
-  return res.json({success: 'true'});
-}
+  return res.json({ success: 'true' });
+};
